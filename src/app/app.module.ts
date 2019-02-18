@@ -7,6 +7,8 @@ import { MyComponentComponent } from './component/my-component/my-component.comp
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
+import { NgxEchartsModule } from 'ngx-echarts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +19,7 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     HttpClientModule,
     CommonModule,
+    NgxEchartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
