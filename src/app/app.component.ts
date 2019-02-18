@@ -10,20 +10,18 @@ import { mergeMap, filter, map, toArray } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   public pageTitle = 'Pedidos';
-  public pedidos;
+  public sheetsResponse;
 
   constructor(
     private apiService: ApiService,
   ) {}
 
   ngOnInit() {
-    this.apiService.pedidos().pipe(
-      mergeMap(pedidos => from(pedidos)),
-      filter((pedido: any) => pedido.total > 100),
-      map((pedido: any) => pedido.produtos),
-      toArray(),
-    ).subscribe(pedidos => {
-      this.pedidos = pedidos;
+    this.apiService.getSheetValues(
+      '1s2oRkL9cZh4SreVKVZWn7l-g5pXI8Km_eFvvkCGnzP8', 'A1:A9'
+    ).subscribe(response => {
+      console.log(`Response is`, response);
+      this.sheetsResponse = response;
     });
   }
 

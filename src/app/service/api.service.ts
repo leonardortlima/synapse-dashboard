@@ -13,8 +13,11 @@ export class ApiService {
     private httpClient: HttpClient,
   ) { }
 
-  public pedidos(spreadsheetId, range): Observable<any> {
-    return this.httpClient.get(`${spreadsheetId}/values/${range}`);
+  public getSheetValues(spreadsheetId, range): Observable<any> {
+    return this.httpClient.get(
+      `${this.baseUrl}${spreadsheetId}/values/${range}`,
+      { params: { key: '' } }
+    );
   }
 
 
