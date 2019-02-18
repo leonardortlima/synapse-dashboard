@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './service/api.service';
-import { from } from 'rxjs';
+import { from, timer, interval } from 'rxjs';
 import { mergeMap, filter, map, toArray } from 'rxjs/operators';
 import { EChartOption } from 'echarts';
 
@@ -16,28 +16,48 @@ export class AppComponent implements OnInit {
   chartOption: EChartOption = {
     xAxis: {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     },
     yAxis: {
       type: 'value'
-    },
-    series: [{
-      data: [820, 932, 901, 934, 1290, 1330, 1320],
-      type: 'line'
-    }]
+    }
   };
 
-  constructor(
-    private apiService: ApiService,
-  ) {}
+  mergeOption: EChartOption = {};
+
+  constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getSheetValues(
-      '1s2oRkL9cZh4SreVKVZWn7l-g5pXI8Km_eFvvkCGnzP8', 'A1:A9'
-    ).subscribe(response => {
-      console.log(`Response is`, response);
-      this.sheetsResponse = response;
-    });
+    interval(1000).pipe(
+      mergeMap(() => this.apiService.getSheetValues('1s2oRkL9cZh4SreVKVZWn7l-g5pXI8Km_eFvvkCGnzP8', 'A2:B5')),
+      map(response => this.transform(response))
+    ).subscribe(response => this.handleResponse(response));
   }
 
+  private handleResponse(response) {
+    const [countries, values] = response;
+    this.mergeOption = {
+      xAxis: {
+        type: 'category',
+        data: countries
+      },
+      series: [
+        {
+          data: values,
+          type: 'line'
+        }
+      ]
+    };
+  }
+
+  private transform(apiResponse) {
+    return apiResponse.values.reduce(
+      (acc, it) => {
+        const [countries, values] = acc;
+        countries.push(it[0]);
+        values.push(it[1]);
+        return acc;
+      },
+      [[], []]
+    );
+  }
 }

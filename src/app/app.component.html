@@ -4,11 +4,14 @@
 </div>
 <h1>{{ pageTitle }}</h1>
 <ul>
-  <li *ngFor="let value of sheetsResponse.values">
+  <!-- <li *ngFor="let value of sheetsResponse.values">
     {{ value }}
-  </li>
+  </li> -->
 </ul>
 
-<div echarts [options]="chartOption" class="demo-chart"></div>
+<div echarts class="demo-chart"
+[options]="chartOption"
+[merge]="mergeOption" >
+</div>
 
 <router-outlet></router-outlet>
