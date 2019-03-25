@@ -2,12 +2,12 @@
 
   <!-- Sidebar -->
   <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Start Bootstrap </div>
+    <div class="sidebar-heading">Synapse Dashboard </div>
     <div class="list-group list-group-flush">
       <a
-      *ngFor="let menuItem of menuItems"
-      href="#"
-      class="list-group-item list-group-item-action bg-light"
+        *ngFor="let menuItem of menuItems"
+        class="list-group-item list-group-item-action bg-light"
+        (click)="onMenuClick(menuItem)"
       >
       {{ menuItem.name }}
     </a>
