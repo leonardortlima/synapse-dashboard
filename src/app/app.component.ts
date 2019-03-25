@@ -28,17 +28,6 @@ export class AppComponent implements OnInit {
   public pageTitle = 'Pedidos';
   public sheetsResponse;
 
-  chartOption: EChartOption = {
-    xAxis: {
-      type: 'category',
-    },
-    yAxis: {
-      type: 'value'
-    }
-  };
-
-  mergeOption: EChartOption = {};
-
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
@@ -54,18 +43,18 @@ export class AppComponent implements OnInit {
 
   private handleResponse(response) {
     const [countries, values] = response;
-    this.mergeOption = {
-      xAxis: {
-        type: 'category',
-        data: countries
-      },
-      series: [
-        {
-          data: values,
-          type: 'line'
-        }
-      ]
-    };
+    // this.mergeOption = {
+    //   xAxis: {
+    //     type: 'category',
+    //     data: countries
+    //   },
+    //   series: [
+    //     {
+    //       data: values,
+    //       type: 'line'
+    //     }
+    //   ]
+    // };
   }
 
   private transform(apiResponse) {
