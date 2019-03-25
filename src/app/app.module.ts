@@ -8,22 +8,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { NgxEchartsModule } from 'ngx-echarts';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarComponent } from './component/navbar/navbar.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MyComponentComponent
-  ],
+  declarations: [AppComponent, MyComponentComponent, NavbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     CommonModule,
     NgxEchartsModule,
-    NgbModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
