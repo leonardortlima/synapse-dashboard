@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { NgxEchartsModule } from 'ngx-echarts';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     HttpClientModule,
     CommonModule,
     NgxEchartsModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,6 +10,8 @@ import { EChartOption } from 'echarts';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  toggleMenu = true;
+
   public pageTitle = 'Pedidos';
   public sheetsResponse;
 
