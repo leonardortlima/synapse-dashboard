@@ -8,7 +8,8 @@ import { EChartOption } from 'echarts';
   selector: 'app-root',
   template: `
   <app-navbar>
-
+    <app-chart-holder>
+    </app-chart-holder>
   </app-navbar>
   `,
   styleUrls: ['./app.component.scss']

@@ -10,9 +10,10 @@ import { CommonModule } from '@angular/common';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './component/navbar/navbar.component';
+import { ChartHolderComponent } from './component/chart-holder/chart-holder.component';
 
 @NgModule({
-  declarations: [AppComponent, MyComponentComponent, NavbarComponent],
+  declarations: [AppComponent, MyComponentComponent, NavbarComponent, ChartHolderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
