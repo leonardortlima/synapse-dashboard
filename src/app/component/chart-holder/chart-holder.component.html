@@ -1,3 +1,5 @@
-<p>
-  chart-holder works!
-</p>
+<div class="row">
+  <div *ngFor="let chart of charts" class="col-6">
+    Renderize um grafico do tipo {{ chart.type}}
+  </div>
+</div>

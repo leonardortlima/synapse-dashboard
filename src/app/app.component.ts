@@ -5,7 +5,7 @@ import { mergeMap, filter, map, toArray } from 'rxjs/operators';
 import { EChartOption } from 'echarts';
 import { MenuItem } from './component/navbar/navbar.component';
 
-interface RenderedChart {
+export interface RenderedChart {
   type: string;
 }
 
@@ -13,7 +13,7 @@ interface RenderedChart {
   selector: 'app-root',
   template: `
   <app-navbar (menuClick)="onMenuClick($event)">
-    <app-chart-holder>
+    <app-chart-holder [charts]="charts">
     </app-chart-holder>
   </app-navbar>
   `,
