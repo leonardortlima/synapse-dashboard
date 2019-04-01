@@ -6,69 +6,80 @@ export interface ChartTransformer {
 }
 
 export class LineChartTransformer implements ChartTransformer {
-
   generateChart(response: any): RenderedChart {
-    const values: Array<any> = response.values;
-    const seriesTitle = values.shift();
+    const values: Array<any> = response.values.slice(1, response.values.length + 1);
+    const seriesTitle = values[0];
 
     const result = {};
 
     values.forEach(element => {
-      const count = (result[element] || 0);
+      const count = result[element] || 0;
       result[element] = count + 1;
     });
 
     const lineChartOption: EChartOption = {
       xAxis: {
-          type: 'category',
-          data: Object.keys(result),
+        type: 'category',
+        data: Object.keys(result)
+      },
+
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
       yAxis: {
-          type: 'value'
+        type: 'value'
       },
-      series: [{
+      series: [
+        {
           data: Object.values(result),
           type: 'line'
-      }]
+        }
+      ]
     };
 
     return {
       type: 'line',
-      chartOption: lineChartOption,
+      chartOption: lineChartOption
     };
   }
 }
 
 export class BarChartTransformer implements ChartTransformer {
-
   generateChart(response: any): RenderedChart {
-    const values: Array<any> = response.values;
-    const seriesTitle = values.shift();
+    const values: Array<any> = response.values.slice(1, response.values.length + 1);
+    const seriesTitle = values[0];
 
     const result = {};
 
     values.forEach(element => {
-      const count = (result[element] || 0);
+      const count = result[element] || 0;
       result[element] = count + 1;
     });
 
     const lineChartOption: EChartOption = {
       xAxis: {
-          type: 'category',
-          data: Object.keys(result),
+        type: 'category',
+        data: Object.keys(result)
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
       yAxis: {
-          type: 'value'
+        type: 'value'
       },
-      series: [{
+      series: [
+        {
           data: Object.values(result),
           type: 'bar'
-      }]
+        }
+      ]
     };
 
     return {
       type: 'bar',
-      chartOption: lineChartOption,
+      chartOption: lineChartOption
     };
   }
 }
@@ -79,49 +90,51 @@ interface PieData {
 }
 
 export class PieChartTransformer implements ChartTransformer {
-
   generateChart(response: any): RenderedChart {
-    const values: Array<any> = response.values;
-    const seriesTitle = values.shift();
+    const values: Array<any> = response.values.slice(1, response.values.length + 1);
+    const seriesTitle = values[0];
 
     const result = {};
 
     values.forEach(element => {
-      const count = (result[element] || 0);
+      const count = result[element] || 0;
       result[element] = count + 1;
     });
 
-    const seriesData: Array<PieData> = Object
-      .entries(result)
-      .map(([key, value]) => {
+    const seriesData: Array<PieData> = Object.entries(result).map(
+      ([key, value]) => {
         return {
           name: key,
-          value: Number(value),
+          value: Number(value)
         };
-      });
+      }
+    );
 
     const pieChartOption: EChartOption = {
-      series : [
-          {
-              name: seriesTitle,
-              type: 'pie',
-              radius : '55%',
-              center: ['50%', '60%'],
-              data: seriesData,
-              itemStyle: {
-                  emphasis: {
-                      shadowBlur: 10,
-                      shadowOffsetX: 0,
-                      shadowColor: 'rgba(0, 0, 0, 0.5)'
-                  }
-              }
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+      },
+      series: [
+        {
+          name: seriesTitle,
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '60%'],
+          data: seriesData,
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
           }
+        }
       ]
     };
     return {
       type: 'pie',
-      chartOption: pieChartOption,
+      chartOption: pieChartOption
     };
   }
-
 }

@@ -19,7 +19,6 @@ export class EchartComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    console.log('this chart', this.chart);
     this.mergeOption = this.chart.chartOption;
   }
 
