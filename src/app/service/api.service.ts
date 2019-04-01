@@ -16,7 +16,7 @@ export class ApiService {
   public getSheetValues(spreadsheetId, range): Observable<any> {
     return this.httpClient.get(
       `${this.baseUrl}${spreadsheetId}/values/${range}`,
-      { params: { key: '' } }
+      { params: { key: '***REMOVED***' } }
     );
   }
 

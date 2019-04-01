@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from './component/navbar/navbar.component';
+import { ApiService } from './service/api.service';
+import { EChartOption } from 'echarts';
+import { LineChartTransformer, BarChartTransformer, PieChartTransformer } from './domain/chart-transformer';
 
 export interface RenderedChart {
   type: string;
+  chartOption: EChartOption;
 }
 
 @Component({
@@ -18,14 +22,34 @@ export interface RenderedChart {
 export class AppComponent implements OnInit {
 
   public charts: Array<RenderedChart> = [];
+  public apiResponse;
 
   toggleMenu = true;
 
-  constructor() {}
+  public transformers = {
+    line: new LineChartTransformer(),
+    bar: new BarChartTransformer(),
+    pie: new PieChartTransformer(),
+  };
 
-  ngOnInit() { }
+  constructor(
+    private apiService: ApiService,
+  ) {}
+
+  ngOnInit() {
+    this.apiService.getSheetValues(
+      '1_6Z7F0WUzEQS3QnT9rtUlHEziWe5DAHRrFpso-uEloY',
+      'G1:G5',
+    ).subscribe(
+      response => {
+        this.apiResponse = response;
+      },
+    );
+  }
 
   onMenuClick(menuItem: MenuItem) {
-    this.charts.push(menuItem);
+    const transformer = this.transformers[menuItem.type];
+    const transformedResponse = transformer.generateChart(this.apiResponse);
+    this.charts.push(transformedResponse);
   }
 }

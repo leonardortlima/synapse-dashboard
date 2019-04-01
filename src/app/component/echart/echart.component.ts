@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { RenderedChart } from 'src/app/app.component';
 import { EChartOption } from 'echarts';
 
@@ -7,37 +7,24 @@ import { EChartOption } from 'echarts';
   templateUrl: './echart.component.html',
   styleUrls: ['./echart.component.scss']
 })
-export class EchartComponent implements OnInit {
+export class EchartComponent implements OnInit, OnChanges {
 
   @Input()
   chart: RenderedChart;
 
-  chartOption: EChartOption = {
-    xAxis: {
-      type: 'category',
-    },
-    yAxis: {
-      type: 'value'
-    }
-  };
+  chartOption: EChartOption = { };
 
   mergeOption: EChartOption = {};
 
   constructor() { }
 
   ngOnInit() {
-    this.mergeOption = {
-      xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      },
-      series: [
-        {
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: this.chart.type,
-        }
-      ]
-    };
+    console.log('this chart', this.chart);
+    this.mergeOption = this.chart.chartOption;
+  }
+
+  ngOnChanges() {
+    console.log('this chart', this.chart);
   }
 
 }
