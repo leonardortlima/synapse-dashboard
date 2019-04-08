@@ -3,6 +3,7 @@ import { MenuItem } from './component/navbar/navbar.component';
 import { ApiService } from './service/api.service';
 import { EChartOption } from 'echarts';
 import { LineChartTransformer, BarChartTransformer, PieChartTransformer } from './domain/chart-transformer';
+import { spread } from 'q';
 
 export interface RenderedChart {
   type: string;
@@ -37,13 +38,19 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.apiService.getSheetValues(
-      '1_6Z7F0WUzEQS3QnT9rtUlHEziWe5DAHRrFpso-uEloY',
-      'G1:G5',
-    ).subscribe(
-      response => {
-        this.apiResponse = response;
-      },
+    // this.apiService.getSheetValues(
+    //   '1_6Z7F0WUzEQS3QnT9rtUlHEziWe5DAHRrFpso-uEloY',
+    //   'G1:G5',
+    // ).subscribe(
+    //   response => {
+    //     this.apiResponse = response;
+    //   },
+    // );
+
+
+    this.apiService.getSpreadsheetValues('1_6Z7F0WUzEQS3QnT9rtUlHEziWe5DAHRrFpso-uEloY')
+    .subscribe(
+      spreadsheet => console.log(`spreadsheet`, spreadsheet)
     );
   }
 
