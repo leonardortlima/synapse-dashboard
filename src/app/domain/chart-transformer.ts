@@ -1,23 +1,27 @@
-import { RenderedChart } from '../app.component';
 import { EChartOption } from 'echarts';
 
 export interface ChartTransformer {
-  generateChart(response: any): RenderedChart;
+  generateChart(values: Array<any>): EChartOption;
 }
 
 export class LineChartTransformer implements ChartTransformer {
-  generateChart(response: any): RenderedChart {
-    const values: Array<any> = response.values.slice(1, response.values.length + 1);
+  generateChart(values: Array<any>): EChartOption {
     const seriesTitle = values[0];
+    const seriesValues: Array<any> = values.slice(1, values.length + 1);
+    console.log(`seriesValues`, seriesValues);
 
     const result = {};
 
-    values.forEach(element => {
+    seriesValues.forEach(element => {
       const count = result[element] || 0;
       result[element] = count + 1;
     });
 
     const lineChartOption: EChartOption = {
+      title: {
+        text: seriesTitle,
+      },
+
       xAxis: {
         type: 'category',
         data: Object.keys(result)
@@ -38,26 +42,27 @@ export class LineChartTransformer implements ChartTransformer {
       ]
     };
 
-    return {
-      type: 'line',
-      chartOption: lineChartOption
-    };
+    return lineChartOption;
   }
 }
 
 export class BarChartTransformer implements ChartTransformer {
-  generateChart(response: any): RenderedChart {
-    const values: Array<any> = response.values.slice(1, response.values.length + 1);
+  generateChart(values: Array<any>): EChartOption {
     const seriesTitle = values[0];
+    const seriesValues: Array<any> = values.slice(1, values.length + 1);
 
     const result = {};
 
-    values.forEach(element => {
+    seriesValues.forEach(element => {
       const count = result[element] || 0;
       result[element] = count + 1;
     });
 
     const lineChartOption: EChartOption = {
+      title: {
+        text: seriesTitle,
+      },
+
       xAxis: {
         type: 'category',
         data: Object.keys(result)
@@ -77,10 +82,7 @@ export class BarChartTransformer implements ChartTransformer {
       ]
     };
 
-    return {
-      type: 'bar',
-      chartOption: lineChartOption
-    };
+    return lineChartOption;
   }
 }
 
@@ -90,13 +92,13 @@ interface PieData {
 }
 
 export class PieChartTransformer implements ChartTransformer {
-  generateChart(response: any): RenderedChart {
-    const values: Array<any> = response.values.slice(1, response.values.length + 1);
+  generateChart(values: Array<any>): EChartOption {
     const seriesTitle = values[0];
+    const seriesValues: Array<any> = values.slice(1, values.length + 1);
 
     const result = {};
 
-    values.forEach(element => {
+    seriesValues.forEach(element => {
       const count = result[element] || 0;
       result[element] = count + 1;
     });
@@ -111,6 +113,10 @@ export class PieChartTransformer implements ChartTransformer {
     );
 
     const pieChartOption: EChartOption = {
+      title: {
+        text: seriesTitle,
+      },
+
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -132,9 +138,6 @@ export class PieChartTransformer implements ChartTransformer {
         }
       ]
     };
-    return {
-      type: 'pie',
-      chartOption: pieChartOption
-    };
+    return pieChartOption;
   }
 }

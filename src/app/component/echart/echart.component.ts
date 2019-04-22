@@ -7,7 +7,7 @@ import { EChartOption } from 'echarts';
   templateUrl: './echart.component.html',
   styleUrls: ['./echart.component.scss']
 })
-export class EchartComponent implements OnInit, OnChanges {
+export class EchartComponent implements OnInit {
 
   @Input()
   chart: RenderedChart;
@@ -19,11 +19,9 @@ export class EchartComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    this.mergeOption = this.chart.chartOption;
-  }
-
-  ngOnChanges() {
-    console.log('this chart', this.chart);
+    this.mergeOption = this.chart.chartTransformer.generateChart(
+      this.chart.values[this.chart.selectedIndex]
+    );
   }
 
 }
