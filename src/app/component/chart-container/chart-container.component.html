@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-2">
+    <div ngbDropdown class="d-inline-block">
+      <button
+        class="btn btn-outline-primary"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        Coluna
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button
+          *ngFor="let option of menuOptions; let i = index"
+          ngbDropdownItem
+          (click)="columnSelected(i)"
+        >
+          {{ option }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12" *ngIf="chart.data != null">
+    <app-echart [chartData]="chart.data" [chartType]="chart.type"> </app-echart>
+  </div>
+</div>

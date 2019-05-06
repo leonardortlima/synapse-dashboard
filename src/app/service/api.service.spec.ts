@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ApiService } from './api.service';
+import { SpreadSheetService } from './api.service';
 
-describe('ApiService', () => {
+describe('SpreadSheetService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ApiService = TestBed.get(ApiService);
+    const service: SpreadSheetService = TestBed.get(SpreadSheetService);
     expect(service).toBeTruthy();
   });
 });

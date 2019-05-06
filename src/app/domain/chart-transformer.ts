@@ -8,7 +8,6 @@ export class LineChartTransformer implements ChartTransformer {
   generateChart(values: Array<any>): EChartOption {
     const seriesTitle = values[0];
     const seriesValues: Array<any> = values.slice(1, values.length + 1);
-    console.log(`seriesValues`, seriesValues);
 
     const result = {};
 
@@ -141,3 +140,9 @@ export class PieChartTransformer implements ChartTransformer {
     return pieChartOption;
   }
 }
+
+export const CHART_TRANSFORMERS: { [type: string]: ChartTransformer } = {
+  line: new LineChartTransformer(),
+  bar: new BarChartTransformer(),
+  pie: new PieChartTransformer(),
+};
