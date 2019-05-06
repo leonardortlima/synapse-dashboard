@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { RenderedChart } from 'src/app/app.component';
 import { SpreadSheetService } from 'src/app/service/api.service';
+import { CHART_TRANSFORMERS } from 'src/app/domain/chart-transformer';
 
 @Component({
   selector: 'app-chart-container',
@@ -13,6 +14,7 @@ export class ChartContainerComponent implements OnInit {
   chart: RenderedChart;
 
   menuOptions: Array<any>;
+  chartTypes: Array<any> = Object.keys(CHART_TRANSFORMERS);
 
   constructor(
     private spreadSheetService: SpreadSheetService,
@@ -35,4 +37,23 @@ export class ChartContainerComponent implements OnInit {
       );
   }
 
+  plusChartSize() {
+    if (this.chart.colSize === 12) {
+      return;
+    }
+
+    this.chart.colSize += 1;
+  }
+
+  minosChartSize() {
+    if (this.chart.colSize === 3) {
+      return;
+    }
+
+    this.chart.colSize -= 1;
+  }
+
+  chartSelected(type) {
+    this.chart.type = type;
+  }
 }

@@ -8,6 +8,7 @@
       >
         Coluna
       </button>
+
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <button
           *ngFor="let option of menuOptions; let i = index"
@@ -18,6 +19,29 @@
         </button>
       </div>
     </div>
+
+    <div ngbDropdown class="d-inline-block">
+      <button
+        class="btn btn-outline-primary"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        Gráfico
+      </button>
+
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button
+          *ngFor="let type of chartTypes; let i = index"
+          ngbDropdownItem
+          (click)="chartSelected(type)"
+        >
+          {{ type | translate }}
+        </button>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-primary" (click)="plusChartSize()">+</button>
+    <button class="btn btn-outline-primary" (click)="minusChartSize()">-</button>
   </div>
 
   <div class="col-12" *ngIf="chart.data != null">
