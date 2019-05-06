@@ -23,7 +23,8 @@ export class LineChartTransformer implements ChartTransformer {
 
       xAxis: {
         type: 'category',
-        data: Object.keys(result)
+        data: Object.keys(result),
+        show: true,
       },
 
       tooltip: {
@@ -31,7 +32,8 @@ export class LineChartTransformer implements ChartTransformer {
         formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        show: true,
       },
       series: [
         {
@@ -64,14 +66,16 @@ export class BarChartTransformer implements ChartTransformer {
 
       xAxis: {
         type: 'category',
-        data: Object.keys(result)
+        data: Object.keys(result),
+        show: true,
       },
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        show: true,
       },
       series: [
         {
@@ -120,6 +124,16 @@ export class PieChartTransformer implements ChartTransformer {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
+      xAxis: [
+        {
+          show: false,
+        }
+      ],
+      yAxis: [
+        {
+        show: false,
+        }
+      ],
       series: [
         {
           name: seriesTitle,
