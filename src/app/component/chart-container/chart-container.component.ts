@@ -45,7 +45,7 @@ export class ChartContainerComponent implements OnInit {
     this.chart.colSize += 1;
   }
 
-  minosChartSize() {
+  minusChartSize() {
     if (this.chart.colSize === 3) {
       return;
     }
