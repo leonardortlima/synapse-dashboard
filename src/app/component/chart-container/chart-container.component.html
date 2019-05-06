@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-2">
-    <div ngbDropdown class="d-inline-block">
+  <div class="col-12">
+    <div class="btn-group mr-2" ngbDropdown role="group">
       <button
         class="btn btn-outline-primary"
         id="dropdownBasic1"
@@ -20,13 +20,13 @@
       </div>
     </div>
 
-    <div ngbDropdown class="d-inline-block">
+    <div class="btn-group mr-2" ngbDropdown role="group">
       <button
         class="btn btn-outline-primary"
         id="dropdownBasic1"
         ngbDropdownToggle
       >
-        Gráfico
+        Tipo
       </button>
 
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -40,8 +40,10 @@
       </div>
     </div>
 
-    <button class="btn btn-outline-primary" (click)="plusChartSize()">+</button>
-    <button class="btn btn-outline-primary" (click)="minusChartSize()">-</button>
+    <button class="btn btn-outline-primary float-right mr-2" (click)="plusChartSize()">+</button>
+    <button class="btn btn-outline-primary float-right mr-2" (click)="minusChartSize()">
+      -
+    </button>
   </div>
 
   <div class="col-12" *ngIf="chart.data != null">
