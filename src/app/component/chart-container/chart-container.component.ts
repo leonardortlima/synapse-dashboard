@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { RenderedChart } from 'src/app/app.component';
 import { SpreadSheetService } from 'src/app/service/api.service';
 import { CHART_TRANSFORMERS } from 'src/app/domain/chart-transformer';
@@ -13,6 +13,9 @@ export class ChartContainerComponent implements OnInit {
   @Input()
   chart: RenderedChart;
 
+  @Output()
+  removeChart: EventEmitter<RenderedChart> = new EventEmitter();
+
   menuOptions: Array<any>;
   chartTypes: Array<any> = Object.keys(CHART_TRANSFORMERS);
 
@@ -21,7 +24,7 @@ export class ChartContainerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.spreadSheetService.getAllSpreadsheetValues('1_6Z7F0WUzEQS3QnT9rtUlHEziWe5DAHRrFpso-uEloY')
+    this.spreadSheetService.getAllSpreadsheetValues()
       .subscribe(
         spreadsheet => {
           this.menuOptions = spreadsheet.columns;
@@ -31,7 +34,7 @@ export class ChartContainerComponent implements OnInit {
   }
 
   columnSelected(index) {
-    this.spreadSheetService.getAllSpreadsheetValues('1_6Z7F0WUzEQS3QnT9rtUlHEziWe5DAHRrFpso-uEloY')
+    this.spreadSheetService.getAllSpreadsheetValues()
       .subscribe(
         spreadsheet => this.chart.data = spreadsheet.values[index]
       );
@@ -55,5 +58,9 @@ export class ChartContainerComponent implements OnInit {
 
   chartSelected(type) {
     this.chart.type = type;
+  }
+
+  removeChartClicked() {
+    this.removeChart.emit(this.chart);
   }
 }

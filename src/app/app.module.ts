@@ -13,6 +13,7 @@ import { ChartListComponent } from './component/chart-list/chart-list.component'
 import { EchartComponent } from './component/echart/echart.component';
 import { ChartContainerComponent } from './component/chart-container/chart-container.component';
 import { TranslatePipe } from './domain/translate-pipe/translate.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,10 +29,11 @@ import { TranslatePipe } from './domain/translate-pipe/translate.pipe';
     AppRoutingModule,
     HttpClientModule,
     CommonModule,
+    FormsModule,
     NgxEchartsModule,
     NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

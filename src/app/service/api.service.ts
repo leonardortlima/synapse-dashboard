@@ -29,6 +29,8 @@ export class SpreadSheetService {
 
   private baseUrl = 'https://sheets.googleapis.com/v4/spreadsheets/';
 
+  private spreadsheetId: string;
+
   private lastFetch: 0;
 
   private spreadSheets: any;
@@ -43,19 +45,19 @@ export class SpreadSheetService {
     private httpClient: HttpClient,
   ) { }
 
-  public getSpreadsheet(spreadsheetId): Observable<any> {
-    const cachedSpreadsheet = this.localSpreadsheetCache[spreadsheetId];
+  public getSpreadsheet(): Observable<any> {
+    const cachedSpreadsheet = this.localSpreadsheetCache[this.spreadsheetId];
     if (cachedSpreadsheet != null && this.isNewerThen2Minutes(cachedSpreadsheet.fetchDate)) {
       return cachedSpreadsheet.value;
     }
 
     return this.httpClient.get(
-      `${this.baseUrl}${spreadsheetId}`,
+      `${this.baseUrl}${this.spreadsheetId}`,
       { params: { key: '***REMOVED***' } }
     ).pipe(
       tap(spreadsheet => {
 
-        this.localSpreadsheetCache[spreadsheetId] = {
+        this.localSpreadsheetCache[this.spreadsheetId] = {
           fetchDate: new Date(),
           value: spreadsheet,
         };
@@ -63,20 +65,20 @@ export class SpreadSheetService {
     );
   }
 
-  public getAllSpreadsheetValues(spreadsheetId): Observable<GoogleSpreadsheet> {
-    const cachedValues = this.localValuesCache[spreadsheetId];
+  public getAllSpreadsheetValues(): Observable<GoogleSpreadsheet> {
+    const cachedValues = this.localValuesCache[this.spreadsheetId];
     if (cachedValues != null && this.isNewerThen2Minutes(cachedValues.fetchDate)) {
       return of(cachedValues.value);
     }
 
-    return this.getSpreadsheet(spreadsheetId).pipe(
+    return this.getSpreadsheet().pipe(
       mergeMap((spreadsheet: any) => {
         const range = spreadsheet.sheets[0].properties.title;
-        return this.getSpreadsheetValues(spreadsheetId, range, 'COLUMNS');
+        return this.getSpreadsheetValues(this.spreadsheetId, range, 'COLUMNS');
       }),
       map(response => {
-        const googleSpreadsheet = this.valuesResponseToGoogleSpreadsheet(spreadsheetId, response);
-        this.localValuesCache[spreadsheetId] = {
+        const googleSpreadsheet = this.valuesResponseToGoogleSpreadsheet(this.spreadsheetId, response);
+        this.localValuesCache[this.spreadsheetId] = {
           fetchDate: new Date(),
           value: googleSpreadsheet,
         };
@@ -96,6 +98,13 @@ export class SpreadSheetService {
         }
       }
     );
+  }
+
+  public setSpreadsheetId(spreadsheetId) {
+    this.spreadsheetId = spreadsheetId;
+
+    this.getAllSpreadsheetValues()
+      .subscribe();
   }
 
   private valuesResponseToGoogleSpreadsheet(spreadsheetId, response): GoogleSpreadsheet {
