@@ -20,15 +20,27 @@ export interface RenderedChart {
 })
 export class AppComponent implements OnInit {
 
+  public spreadsheet: GoogleSpreadsheet;
   public charts: Array<RenderedChart> = [];
 
   toggleMenu = true;
 
-  constructor() { }
+  constructor(
+    private apiService: SpreadSheetService,
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.apiService.getAllSpreadsheetValues()
+      .subscribe(
+        spreadsheet => this.spreadsheet = spreadsheet,
+      );
+  }
 
   onMenuClick(menuItem: MenuItem) {
+    if (this.spreadsheet == null) {
+      return;
+    }
+
     this.charts.push({
       type: menuItem.type,
       colSize: 12,

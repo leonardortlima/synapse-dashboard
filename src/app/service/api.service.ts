@@ -22,6 +22,8 @@ export interface GoogleSpreadsheet {
   values: Array<Array<any>>;
 }
 
+const AUTH_PARAMS = { key: '***REMOVED***' };
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,7 +31,7 @@ export class SpreadSheetService {
 
   private baseUrl = 'https://sheets.googleapis.com/v4/spreadsheets/';
 
-  private spreadsheetId: string;
+  private spreadsheetId = '1_6Z7F0WUzEQS3QnT9rtUlHEziWe5DAHRrFpso-uEloY';
 
   private lastFetch: 0;
 
@@ -45,19 +47,19 @@ export class SpreadSheetService {
     private httpClient: HttpClient,
   ) { }
 
-  public getSpreadsheet(): Observable<any> {
-    const cachedSpreadsheet = this.localSpreadsheetCache[this.spreadsheetId];
+  public getSpreadsheet(spreadsheetId): Observable<any> {
+    const cachedSpreadsheet = this.localSpreadsheetCache[spreadsheetId];
     if (cachedSpreadsheet != null && this.isNewerThen2Minutes(cachedSpreadsheet.fetchDate)) {
       return cachedSpreadsheet.value;
     }
 
     return this.httpClient.get(
-      `${this.baseUrl}${this.spreadsheetId}`,
-      { params: { key: '***REMOVED***' } }
+      `${this.baseUrl}${spreadsheetId}`,
+      { params: AUTH_PARAMS }
     ).pipe(
       tap(spreadsheet => {
 
-        this.localSpreadsheetCache[this.spreadsheetId] = {
+        this.localSpreadsheetCache[spreadsheetId] = {
           fetchDate: new Date(),
           value: spreadsheet,
         };
@@ -71,7 +73,7 @@ export class SpreadSheetService {
       return of(cachedValues.value);
     }
 
-    return this.getSpreadsheet().pipe(
+    return this.getSpreadsheet(this.spreadsheetId).pipe(
       mergeMap((spreadsheet: any) => {
         const range = spreadsheet.sheets[0].properties.title;
         return this.getSpreadsheetValues(this.spreadsheetId, range, 'COLUMNS');
@@ -93,7 +95,7 @@ export class SpreadSheetService {
       {
         params:
         {
-          key: '***REMOVED***',
+          ...AUTH_PARAMS,
           majorDimension: dimension,
         }
       }
@@ -102,9 +104,6 @@ export class SpreadSheetService {
 
   public setSpreadsheetId(spreadsheetId) {
     this.spreadsheetId = spreadsheetId;
-
-    this.getAllSpreadsheetValues()
-      .subscribe();
   }
 
   private valuesResponseToGoogleSpreadsheet(spreadsheetId, response): GoogleSpreadsheet {

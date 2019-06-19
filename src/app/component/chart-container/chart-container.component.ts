@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { RenderedChart } from 'src/app/app.component';
 import { SpreadSheetService } from 'src/app/service/api.service';
 import { CHART_TRANSFORMERS } from 'src/app/domain/chart-transformer';
