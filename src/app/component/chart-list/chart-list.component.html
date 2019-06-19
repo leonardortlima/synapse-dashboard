@@ -1,9 +1,5 @@
 <div class="row">
-  <div
-    *ngFor="let chart of charts; let c = index"
-    [ngClass]="'col-' + chart.colSize"
-  >
-    <app-chart-container [chart]="chart" (removeChart)="onChartRemoved($event)">
-    </app-chart-container>
+  <div *ngFor="let chart of charts; let c = index" [ngClass]="'col-' + chart.colSize">
+    <app-chart-container [chart]=chart></app-chart-container>
   </div>
 </div>

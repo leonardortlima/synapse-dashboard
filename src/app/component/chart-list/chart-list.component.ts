@@ -15,8 +15,4 @@ export class ChartListComponent implements OnInit {
 
   ngOnInit() { }
 
-  onChartRemoved(chart: RenderedChart) {
-    this.charts.splice(this.charts.indexOf(chart), 1);
-  }
-
 }
